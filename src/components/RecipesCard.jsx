@@ -12,13 +12,16 @@ function RecipesCard({ recipes }) {
             data-testid={ `${index}-horizontal-image` }
           />
           <h1 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h1>
-          <p data-testid={ `${index}-horizontal-top-text` }>{recipe.categoy}</p>
+          <p data-testid={ `${index}-horizontal-top-text` }>
+            { recipe.type === 'meal'
+              ? `${recipe.nationality} - ${recipe.category}` : recipe.alcoholicOrNot }
+          </p>
           <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-          {recipe.tags.map((tag) => (
+          { recipe.type === 'meal' ? recipe.tags.map((tag) => (
             <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ index }>
               {tag}
             </p>
-          ))}
+          )) : null }
           <button
             src={ shareIcon }
             type="button"
