@@ -1,4 +1,6 @@
 import { number, arrayOf, string, shape } from 'prop-types';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import Swal from 'sweetalert2';
 import shareIcon from '../images/shareIcon.svg';
 
 function RecipesCard({ recipes }) {
@@ -22,14 +24,27 @@ function RecipesCard({ recipes }) {
               {tag}
             </p>
           )) : null }
-          <button
-            src={ shareIcon }
-            type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
+          <CopyToClipboard
+            text={ `/meals/${recipe.id}` }
+            onCopy={ () => {
+              navigator.clipboard.writeText(`http://localhost:3000/meals/${recipe.id}`);
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Link copied!',
+                showConfirmButton: false,
+                timer: 1000,
+              });
+            } }
           >
-            <img src={ shareIcon } alt="share-icon" />
-          </button>
-
+            <button
+              src={ shareIcon }
+              type="button"
+              data-testid={ `${index}-horizontal-share-btn` }
+            >
+              <img src={ shareIcon } alt="share-icon" />
+            </button>
+          </CopyToClipboard>
         </div>
       ))}
     </div>

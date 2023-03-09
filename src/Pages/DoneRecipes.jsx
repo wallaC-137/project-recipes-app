@@ -22,10 +22,10 @@ function DoneRecipes() {
         >
           Drinks
         </button>
-        <br />
-        <br />
-        <RecipesCard recipes={ recipes } />
       </div>
+      <br />
+      <br />
+      <RecipesCard recipes={ recipes } />
     </div>
   );
 }
