@@ -6,11 +6,6 @@ import Header from '../components/Header';
 function Profile() {
   const [userEmail, setUserEmail] = useState({});
 
-  // const getEmail = async () => {
-  //   const emailUser = await JSON.parse(localStorage.getItem('user'));
-  //   setEmail(emailUser);
-  // };
-
   useEffect(() => {
     const emailUser = JSON.parse(localStorage.getItem('user')) || {};
     setUserEmail(emailUser);
