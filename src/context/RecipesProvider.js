@@ -12,6 +12,10 @@ export default function RecipesProvider({ children }) {
   const [handleStart, setHandleStart] = useState('');
   const [alert, setAlert] = useState(false);
   const [recipesFiltered, setRecipesFiltered] = useState([]);
+  const [ingredient, setIngredient] = useState('');
+  const [typeRecipe, setTypeRecipe] = useState(null);
+  const [measure, setMeasure] = useState(null);
+  const [recomendation, setRecomendation] = useState(null);
 
   const value = useMemo(() => ({
     alert,
@@ -26,7 +30,26 @@ export default function RecipesProvider({ children }) {
     setRecipes,
     recipesFiltered,
     setRecipesFiltered,
-  }), [user, stateApi, recipes, recipesFiltered, handleStart, alert]);
+    ingredient,
+    setIngredient,
+    typeRecipe,
+    setTypeRecipe,
+    measure,
+    setMeasure,
+    recomendation,
+    setRecomendation,
+  }), [
+    user,
+    stateApi,
+    recipes,
+    recipesFiltered,
+    handleStart,
+    alert,
+    ingredient,
+    typeRecipe,
+    measure,
+    recomendation,
+  ]);
   return (
     <RecipesContext.Provider value={ value }>
       { children }
