@@ -87,7 +87,7 @@ function RecipeInProgress() {
     for (let i = 1; i <= max; i += 1) {
       const ingredientName = `strIngredient${i}`;
       const measureName = `strMeasure${i}`;
-      if (x[0][ingredientName]) {
+      if (x?.[0]?.[ingredientName]) {
         ingredients.push(x[0][ingredientName]);
         measures.push(x[0][measureName]);
       }
@@ -96,11 +96,12 @@ function RecipeInProgress() {
     setAmount(measures);
   };
 
-  const wal = () => {
+  /**
+   * save object in localStorage
+   */
+  const savedLocalStorage = () => {
     const qualquer = '/done-recipes';
     push(qualquer);
-
-    console.log(typeRecipes);
 
     const newObj = {
       id: responseApi[0]?.idMeal ?? responseApi[0]?.idDrink,
@@ -116,7 +117,6 @@ function RecipeInProgress() {
 
     const ls = JSON.parse(localStorage.getItem('doneRecipes')) ?? [];
     localStorage.setItem('doneRecipes', JSON.stringify([...ls, newObj]));
-    // console.log(newObj);
   };
 
   /**
@@ -214,7 +214,7 @@ function RecipeInProgress() {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ ingredient.length !== goLs2?.length }
-        onClick={ wal }
+        onClick={ savedLocalStorage }
       >
         Finalizar Receita
       </button>

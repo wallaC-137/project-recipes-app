@@ -19,8 +19,8 @@ describe('All tests from Search', () => {
         userEvent.click(input);
       }
     });
-    const algo = screen.getAllByRole('checkbox');
-    expect(algo).toHaveLength(6);
+    const getCheckbox = screen.getAllByRole('checkbox');
+    expect(getCheckbox).toHaveLength(6);
   });
 
   it('', async () => {
@@ -37,11 +37,33 @@ describe('All tests from Search', () => {
         userEvent.click(input);
       }
     });
-    const algo = screen.getAllByRole('checkbox');
-    expect(algo).toHaveLength(3);
+    const getCheckBox = screen.getAllByRole('checkbox');
+    expect(getCheckBox).toHaveLength(3);
   });
 
-  it.only('', async () => {
+  it('', async () => {
+    renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/meals/52771/in-progress'] },
+    );
+
+    window.document.execCommand = jest.fn(() => true);
+
+    const button = screen.getByTestId('share-btn');
+    userEvent.click(button);
+
+    const textCopy = await screen.findByText(/link copied!/i);
+
+    await waitFor(() => {
+      expect(textCopy).not.toBeInTheDocument();
+    }, { timeout: 3000 });
+  });
+});
+
+describe('', () => {
+  it('', async () => {
     renderWithRouter(
       <RecipesProvider>
         <App />
@@ -49,13 +71,88 @@ describe('All tests from Search', () => {
       { initialEntries: ['/drinks/14229/in-progress'] },
     );
 
-    // await waitFor(() => {
-    const button = screen.getByTestId('share-btn');
-    userEvent.click(button);
-    // });
-    // const textCopy = screen.getByText(/link copied!/i);
-    // userEvent.click(textCopy);
-    // const algo = screen.getAllByRole('checkbox');
-    // expect(algo).toHaveLength(3);
+    await waitFor(() => {
+      const getName = screen.getByText(/747/i);
+      expect(getName).toBeInTheDocument();
+    });
+
+    const getCheckBox = screen.getAllByRole('checkbox');
+    expect(getCheckBox).toHaveLength(3);
+
+    userEvent.click(getCheckBox[0]);
+    userEvent.click(getCheckBox[0]);
+
+    getCheckBox[0].checked = true;
+    expect(getCheckBox[0]).toBeChecked();
+    getCheckBox[0].checked = false;
+    expect(getCheckBox[0]).not.toBeChecked();
+
+    const getBtnFinish = screen.getByRole('button', { name: /finalizar receita/i });
+    for (let i = 0; i < 3; i += 1) {
+      userEvent.click(getCheckBox[i]);
+    }
+    userEvent.click(getBtnFinish);
+  });
+
+  it('', async () => {
+    renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/meals/52771/in-progress'] },
+    );
+
+    await waitFor(() => {
+      const getName = screen.getByText(/Spicy Arrabiata Penne/i);
+      expect(getName).toBeInTheDocument();
+    });
+
+    const getCheckBox = screen.getAllByRole('checkbox');
+    expect(getCheckBox).toHaveLength(8);
+
+    userEvent.click(getCheckBox[0]);
+    userEvent.click(getCheckBox[0]);
+
+    getCheckBox[0].checked = true;
+    expect(getCheckBox[0]).toBeChecked();
+    getCheckBox[0].checked = false;
+    expect(getCheckBox[0]).not.toBeChecked();
+
+    const getBtnFinish = screen.getByRole('button', { name: /finalizar receita/i });
+    for (let i = 0; i < 8; i += 1) {
+      userEvent.click(getCheckBox[i]);
+    }
+    userEvent.click(getBtnFinish);
+  });
+
+  it('', async () => {
+    renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/drinks/15997/in-progress'] },
+    );
+
+    await waitFor(() => {
+      const getName = screen.getByText(/Spicy Arrabiata Penne/i);
+      expect(getName).toBeInTheDocument();
+    });
+
+    const getCheckBox = screen.getAllByRole('checkbox');
+    expect(getCheckBox).toHaveLength(3);
+
+    userEvent.click(getCheckBox[0]);
+    userEvent.click(getCheckBox[0]);
+
+    getCheckBox[0].checked = true;
+    expect(getCheckBox[0]).toBeChecked();
+    getCheckBox[0].checked = false;
+    expect(getCheckBox[0]).not.toBeChecked();
+
+    const getBtnFinish = screen.getByRole('button', { name: /finalizar receita/i });
+    for (let i = 0; i < 3; i += 1) {
+      userEvent.click(getCheckBox[i]);
+    }
+    userEvent.click(getBtnFinish);
   });
 });
