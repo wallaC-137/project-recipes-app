@@ -5,7 +5,7 @@ import App from '../App';
 import RecipesProvider from '../context/RecipesProvider';
 
 describe('All tests from Search', () => {
-  it('It should navigate to the selected meal page when a meal category is clicked and a specific meal is selected from the list', async () => {
+  it('', async () => {
     renderWithRouter(
       <RecipesProvider>
         <App />
@@ -23,7 +23,7 @@ describe('All tests from Search', () => {
     expect(algo).toHaveLength(6);
   });
 
-  it('It should navigate to the selected meal page when a meal category is clicked and a specific meal is selected from the list', async () => {
+  it('', async () => {
     renderWithRouter(
       <RecipesProvider>
         <App />
@@ -39,5 +39,23 @@ describe('All tests from Search', () => {
     });
     const algo = screen.getAllByRole('checkbox');
     expect(algo).toHaveLength(3);
+  });
+
+  it.only('', async () => {
+    renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/drinks/14229/in-progress'] },
+    );
+
+    // await waitFor(() => {
+    const button = screen.getByTestId('share-btn');
+    userEvent.click(button);
+    // });
+    // const textCopy = screen.getByText(/link copied!/i);
+    // userEvent.click(textCopy);
+    // const algo = screen.getAllByRole('checkbox');
+    // expect(algo).toHaveLength(3);
   });
 });

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useParams, useRouteMatch } from 'react-router-dom';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import clipboard from 'clipboard-copy';
 import style from './RecipeInProgress.module.css';
 import RecipesContext from '../context/RecipesContext';
@@ -19,6 +19,7 @@ function RecipeInProgress() {
   const { pathname } = useLocation();
   const { id } = useParams();
   const match = useRouteMatch();
+  const { push } = useHistory();
 
   const params = pathname.slice(1).split('/');
   const typeRecipes = params[0];
@@ -95,6 +96,29 @@ function RecipeInProgress() {
     setAmount(measures);
   };
 
+  const wal = () => {
+    const qualquer = '/done-recipes';
+    push(qualquer);
+
+    console.log(typeRecipes);
+
+    const newObj = {
+      id: responseApi[0]?.idMeal ?? responseApi[0]?.idDrink,
+      nationality: responseApi[0]?.strArea ?? '',
+      name: responseApi[0]?.strMeal ?? responseApi[0]?.strDrink,
+      category: responseApi[0]?.strCategory ?? responseApi[0]?.strAlcoholic,
+      image: responseApi[0]?.strMealThumb ?? responseApi[0]?.strDrinkThumb,
+      tags: responseApi[0]?.strTags ? responseApi[0]?.strTags.split(',') : [],
+      alcoholicOrNot: responseApi[0]?.strAlcoholic ?? '',
+      type: typeRecipes.slice(0, typeRecipes.length - 1),
+      doneDate: new Date().toISOString(),
+    };
+
+    const ls = JSON.parse(localStorage.getItem('doneRecipes')) ?? [];
+    localStorage.setItem('doneRecipes', JSON.stringify([...ls, newObj]));
+    // console.log(newObj);
+  };
+
   /**
    * function responsible for executing requests to the api
    */
@@ -123,8 +147,6 @@ function RecipeInProgress() {
     lsRecovery2();
   }, [done]);
 
-  console.log('goLs2', goLs2);
-  console.log('ingredient', ingredient);
   return (
     <div>
       <h1
@@ -192,6 +214,7 @@ function RecipeInProgress() {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ ingredient.length !== goLs2?.length }
+        onClick={ wal }
       >
         Finalizar Receita
       </button>
