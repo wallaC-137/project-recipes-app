@@ -123,6 +123,8 @@ function RecipeInProgress() {
     lsRecovery2();
   }, [done]);
 
+  console.log('goLs2', goLs2);
+  console.log('ingredient', ingredient);
   return (
     <div>
       <h1
@@ -188,6 +190,8 @@ function RecipeInProgress() {
       </p>
       <button
         data-testid="finish-recipe-btn"
+        type="button"
+        disabled={ ingredient.length !== goLs2?.length }
       >
         Finalizar Receita
       </button>
