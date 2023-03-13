@@ -7,7 +7,7 @@ import blackHeart from '../images/blackHeartIcon.svg';
 import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 
-function FavoriteRecipes({ id }) {
+function FavoriteRecipes() {
   const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) ?? [];
   const [favoriteRecipes, setFavoriteRecipes] = useState(favRecipes);
   const { alert, setAlert } = useContext(RecipesContext);
@@ -20,13 +20,13 @@ function FavoriteRecipes({ id }) {
     }
   };
 
-  const removeFavorites = () => {
+  const removeFavorites = ({ target: { id } }) => {
     const favorite = favoriteRecipes.some((recipe) => recipe.id === id);
     if (favorite) {
       setFavoriteRecipes(favoriteRecipes.filter((recipe) => recipe.id !== id));
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-    } else {
-      setFavoriteRecipes(...favorite);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(
+        favoriteRecipes.filter((recipe) => recipe.id !== id),
+      ));
     }
   };
 
@@ -92,11 +92,12 @@ function FavoriteRecipes({ id }) {
             </button>
             <button
               className="buttonFavorite"
+              alt="button-delete-favorite"
               data-testid={ `${index}-horizontal-favorite-btn` }
               src={ blackHeart }
               onClick={ removeFavorites }
             >
-              <img src={ blackHeart } alt="" />
+              <img src={ blackHeart } alt="" id={ recipe.id } />
             </button>
           </div>))}
         { alert && <p>Link copied!</p> }
