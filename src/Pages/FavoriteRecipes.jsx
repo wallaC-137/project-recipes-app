@@ -8,7 +8,7 @@ import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 
 function FavoriteRecipes() {
-  const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) ?? [];
+  const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   const [favoriteRecipes, setFavoriteRecipes] = useState(favRecipes);
   const { alert, setAlert } = useContext(RecipesContext);
 
@@ -41,6 +41,9 @@ function FavoriteRecipes() {
   return (
     <div>
       <Header />
+      <h1 data-testid="page-title">
+        Favorite Recipes
+      </h1>
       <button
         type="button"
         data-testid="filter-by-all-btn"
@@ -63,7 +66,7 @@ function FavoriteRecipes() {
         Drinks
       </button>
       <section>
-        {favoriteRecipes.map((recipe, index) => (
+        {favoriteRecipes?.map((recipe, index) => (
           <div key={ index }>
             <Link
               to={ recipe.type === 'meal'
