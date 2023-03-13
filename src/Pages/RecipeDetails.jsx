@@ -11,12 +11,22 @@ import RecipesContext from '../context/RecipesContext';
 export default function RecipeDetails() {
   const [drink, setDrink] = useState({});
   const [meal, setMeal] = useState({});
-  const { alert } = useContext(RecipesContext);
+  const {
+    alert,
+    ingredient,
+    setIngredient,
+    typeRecipe,
+    setTypeRecipe,
+    measure,
+    setMeasure,
+    recomendation,
+    setRecomendation,
+  } = useContext(RecipesContext);
   const history = useHistory();
-  const [recomendation, setRecomendation] = useState(null);
-  const [typeRecipe, setTypeRecipe] = useState(null);
-  const [ingredient, setIngredient] = useState('');
-  const [measure, setMeasure] = useState(null);
+  // const [recomendation, setRecomendation] = useState(null);
+  // const [typeRecipe, setTypeRecipe] = useState(null);
+  // const [ingredient, setIngredient] = useState('');
+  // const [measure, setMeasure] = useState(null);
   const { pathname } = useLocation();
   const params = pathname.slice(1).split('/');
   const { id } = useParams();
@@ -86,16 +96,16 @@ export default function RecipeDetails() {
         ...meal,
       },
     };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
+    localStorage.setItem('recipes', JSON.stringify(obj));
   }, [drink, meal]);
 
   const startRecipe = () => {
-    if (typeRecipes === 'meals') {
-      setMeal({ ...meal, [id]: ingredient });
-    } else {
-      setDrink({ ...drink, [id]: ingredient });
-    }
-    const duration = 3000;
+    // if (typeRecipes === 'meals') {
+    //   setMeal({ ...meal, [id]: ingredient });
+    // } else {
+    //   setDrink({ ...drink, [id]: ingredient });
+    // }
+    const duration = 1000;
     setTimeout(() => {
       history.push(`/${typeRecipes}/${id}/in-progress`);
     }, duration);
