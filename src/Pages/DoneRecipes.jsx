@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import RecipesCard from '../components/RecipesCard';
 
 function DoneRecipes() {
-  const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  const recipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
 
   function applyFilter(filter) {
