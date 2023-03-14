@@ -66,7 +66,7 @@ function FavoriteRecipes() {
         Drinks
       </button>
       <section>
-        {favoriteRecipes?.map((recipe, index) => (
+        {favoriteRecipes.map((recipe, index) => (
           <div key={ index }>
             <Link
               to={ recipe.type === 'meal'
